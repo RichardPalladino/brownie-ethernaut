@@ -1,4 +1,4 @@
-from brownie import reverts, accounts
+from brownie import accounts
 
 from scripts.deploy import deploy_telephone_contract, deploy_telephone_attack
 

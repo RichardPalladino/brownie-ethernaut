@@ -8,6 +8,7 @@ from brownie import (
     CoinFlip,
     Telephone,
     AttackTelephone,
+    Token,
 )
 
 LOCAL_BLOCKCHAINS = ["development", "ganache-local"]
@@ -61,4 +62,12 @@ def deploy_telephone_attack(_telephone_contract) -> AttackTelephone:
     print(f"Deploying telephone attack contract from {account}....")
     contract = AttackTelephone.deploy(_telephone_contract, {"from": account})
     print("Success! Telephone attack contract deployed at {}".format(contract.address))
+    return contract
+
+
+def deploy_token_underflow(_starting_ammount) -> Token:
+    account = get_account()
+    print(f"Deploying token contract vulnerable to underflow from {account}....")
+    contract = Token.deploy(_starting_ammount, {"from": account})
+    print("Success! Token contract deployed at {}".format(contract.address))
     return contract
