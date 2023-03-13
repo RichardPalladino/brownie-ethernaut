@@ -1,5 +1,14 @@
 # Template to deploy solidity contract to a blockchain
-from brownie import network, config, accounts, Fallback, Fallout, CoinFlip
+from brownie import (
+    network,
+    config,
+    accounts,
+    Fallback,
+    Fallout,
+    CoinFlip,
+    Telephone,
+    AttackTelephone,
+)
 
 LOCAL_BLOCKCHAINS = ["development", "ganache-local"]
 BLOCKCHAIN_FORKS = ["mainnet-fork", "mainnet-fork-dev"]
@@ -36,4 +45,20 @@ def deploy_coinflip_contract() -> CoinFlip:
     print(f"Deploying fallback vulnerable contract from {account}....")
     contract = CoinFlip.deploy({"from": account})
     print("Success! CoinFlip contract deployed at {}".format(contract.address))
+    return contract
+
+
+def deploy_telephone_contract() -> Telephone:
+    account = get_account()
+    print(f"Deploying telephone contract from {account}....")
+    contract = Telephone.deploy({"from": account})
+    print("Success! Telephone contract deployed at {}".format(contract.address))
+    return contract
+
+
+def deploy_telephone_attack(_telephone_contract) -> AttackTelephone:
+    account = accounts[2]
+    print(f"Deploying telephone attack contract from {account}....")
+    contract = AttackTelephone.deploy(_telephone_contract, {"from": account})
+    print("Success! Telephone attack contract deployed at {}".format(contract.address))
     return contract
