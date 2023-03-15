@@ -40,8 +40,10 @@ def get_account() -> str:
         or network.show_active() in BLOCKCHAIN_FORKS
     ):
         return accounts[0]
-    else:
+    elif network.show_active() in TESTNETS:
         return accounts.add(config["networks"][network.show_active()]["wallet"])
+    else:
+        return accounts.add(config["wallets"]["from_key"])
 
 
 def main():
