@@ -4,17 +4,18 @@ compiler:
  solc:
   remappings:
     - '@openzeppelin=OpenZeppelin/openzeppelin-contracts@3.1.0'
-
-    
+  
+dotenv: .env  
 networks:
   default: mainnet-fork
   goerli:
+    wallet: ${GOERLI_PRIVATE_KEY}
+    endpoint: ${TESTNET_ALCHEMY_ENDPOINT}
     verify: True
   mainnet-fork:
     verify: False
   development:
     verify: False
-dotenv: .env
 wallets:
   from_key: ${TESTNET_PRIVATE_KEY}
 keys:

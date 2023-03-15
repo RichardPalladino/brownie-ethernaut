@@ -14,7 +14,4 @@ contract AttackTelephone {
         telephone.changeOwner(benefactor);
     }
 
-    // function attackTelephone() public {
-    //     telephone.changeOwner
-    // }
 }

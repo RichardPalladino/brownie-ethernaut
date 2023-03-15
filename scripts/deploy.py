@@ -12,10 +12,12 @@ from brownie import (
     Delegate,
     Delegation,
     AttackDelegation,
+    AttackCoinflip,
 )
 
 LOCAL_BLOCKCHAINS = ["development", "ganache-local"]
 BLOCKCHAIN_FORKS = ["mainnet-fork", "mainnet-fork-dev"]
+TESTNETS = ["goerli", "sepolia"]
 
 
 def get_account() -> str:
@@ -24,6 +26,8 @@ def get_account() -> str:
         or network.show_active() in BLOCKCHAIN_FORKS
     ):
         return accounts[0]
+    elif network.show_active() in TESTNETS:
+        return accounts.add(config["networks"][network.show_active()]["wallet"])
     else:
         return accounts.add(config["wallets"]["from_key"])
 
@@ -93,4 +97,14 @@ def deploy_attack_delegation(_delegation_contract) -> AttackDelegation:
     )
     contract = AttackDelegation.deploy(_delegation_contract, {"from": account})
     print("Success! Delegation attack contract deployed at {}".format(contract.address))
+    return contract
+
+
+def deploy_attack_coinflip(_coinflip_contract) -> AttackCoinflip:
+    account = get_account()
+    print(
+        f"Deploying attack contract from {account} to attack {_coinflip_contract}...."
+    )
+    contract = AttackCoinflip.deploy(_coinflip_contract, {"from": account})
+    print("Success! Coinflip attack contract deployed at {}".format(contract.address))
     return contract
